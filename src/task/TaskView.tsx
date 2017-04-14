@@ -4,20 +4,26 @@ import TaskViewModel from "./TaskViewModel";
 import {TaskStore} from "./TaskStore";
 import * as React from "react";
 import TaskList from "./TaskList";
+import {STORE_TASK} from "../constants/stores";
+import {inject} from "mobx-react/custom";
+import "./task.less"
 
 interface TaskViewProps {
-    store: TaskStore
-    viewModel: TaskViewModel
+    // injected
+    //store: TaskStore
+    // viewModel: TaskViewModel
 }
 
+@inject(STORE_TASK)
 @observer
 export default class TaskView extends React.Component<TaskViewProps, {}> {
-
+    private viewModel = new TaskViewModel();
     render() {
-        const {store, viewModel} = this.props;
+        const store: TaskStore = this.props[STORE_TASK];
+
         return <div>
-            <TaskToolbar viewModel={viewModel} store={store}/>
-            <TaskList viewModel={viewModel} store={store}/>
+            <TaskToolbar viewModel={this.viewModel} store={store}/>
+            <TaskList viewModel={this.viewModel} store={store}/>
         </div>
     }
 }

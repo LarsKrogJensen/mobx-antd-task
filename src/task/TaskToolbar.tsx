@@ -4,6 +4,7 @@ import * as React from "react";
 import TaskViewModel from "./TaskViewModel";
 import {Button, Checkbox, Radio} from "antd";
 import {TODO_FILTER_TITLES, TodoFilter} from "../constants/todos";
+import {autobind} from "core-decorators";
 
 
 interface TaskToolbarProps {
@@ -16,7 +17,7 @@ export default class TaskToolbar extends React.Component<TaskToolbarProps, {}> {
 
     constructor(props: TaskToolbarProps, context: any) {
         super(props, context);
-        this.handleNewTask = this.handleNewTask.bind(this);
+        // this.handleNewTask = this.handleNewTask.bind(this);
         this.onSaveTasks = this.onSaveTasks.bind(this);
         this.onLoadTasks = this.onLoadTasks.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
@@ -26,6 +27,7 @@ export default class TaskToolbar extends React.Component<TaskToolbarProps, {}> {
         this.props.viewModel.setFilter(e.target.value)
     }
 
+    @autobind
     handleNewTask(e: React.FormEvent<HTMLInputElement>) {
         e.preventDefault()
         this.props.store.add();
