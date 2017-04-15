@@ -17,18 +17,10 @@ interface TaskListProps {
 
 @observer
 export default class TaskList extends React.Component<TaskListProps, {}> {
-
-
-    @autobind
-    removeTask(model: TaskModel) {
-        this.props.store.remove(model);
-    }
-
     render() {
 
         const store = this.props.store;
         const filter = this.props.viewModel.filter;
-
 
         return (
             <div className="task-list">
@@ -43,7 +35,7 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
                     </DataGridHeader>
                     <DataGridBody loading={store.loading}>
                         {store.tasks.filter(model => filter == TodoFilter.ALL || (filter == TodoFilter.COMPLETED && model.completed) || (filter == TodoFilter.ACTIVE && !model.completed))
-                            .map(model => <TaskRow key={model.id} model={model} onRemoveTask={this.removeTask}/>)}
+                            .map(model => <TaskRow key={model.id} store={store} model={model}/>)}
                     </DataGridBody>
                 </DataGrid>
             </div>

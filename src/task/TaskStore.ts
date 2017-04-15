@@ -1,9 +1,11 @@
-import {action, autorun, computed, observable} from "mobx";
+import {action, autorun, computed, IReactionDisposer, observable} from "mobx";
 import {TaskModel} from "./TaskModel";
 import TaskApi from "./TaskApi";
-import TaskList from "./TaskList";
+
 export class TaskStore {
     private api: TaskApi;
+
+    private readonly watchers: Map<number, IReactionDisposer> = new Map();
 
     @observable
     readonly tasks: Array<TaskModel> = []
@@ -18,14 +20,6 @@ export class TaskStore {
         this.api = api;
         this.load()
         this.remove = this.remove.bind(this)
-
-        // autorun((reaction)=>  {
-        //     console.log(reaction)
-        //     this.tasks.forEach(task => {
-        //         console.log("Saving task: " + task)
-        //         api.updateTask(task);
-        //     })
-        // })
     }
 
     @action
@@ -35,18 +29,20 @@ export class TaskStore {
 
     @action
     replaceAll(tasks: Array<TaskModel>) {
+        this.watchers.forEach((value: IReactionDisposer) => value());
+        this.watchers.clear();
         this.tasks.splice(0, this.tasks.length)
-        tasks.forEach(task => {
-            this.tasks.push(task)
 
-            this.watchTask(task);
+        tasks.forEach(task => {
+            this.addTask(task)
         })
     }
 
-    private watchTask(task) {
-        autorun(() => {
-            this.api.updateTask(task)
-        })
+    private watchTask(task: TaskModel) {
+        // const disposer = autorun(() => {
+        //     this.api.updateTask(task)
+        // });
+        // this.watchers.set(task.id, disposer);
     }
 
     @action
@@ -59,56 +55,48 @@ export class TaskStore {
         this.saving = saving;
     }
 
+    update(model: TaskModel, dispatcher: (model:TaskModel) => void) {
+        dispatcher(model);
+        this.api.updateTask(model);
+    }
 
     @action
     load() {
         this.setLoading(true)
 
         this.api.loadTasks()
-            .then(tasks => {
-                this.replaceAll(tasks)
-            })
-            .catch(reason => {
-                console.log(reason)
-            })
+            .then(tasks => this.replaceAll(tasks))
+            .catch(reason => console.log(reason))
             .then(_ => this.setLoading(false))
     }
 
-    // @action
-    // save() {
-    //     // are there invalid tasks?
-    //     if (this.tasks.filter(tasks => tasks.isValid === false).length > 0) {
-    //         alert("Unable to save: There are invalid Todos.")
-    //     }
-    //
-    //     // if (window.localStorage) {
-    //     //     window.localStorage.setItem(
-    //     //         "tasks",
-    //     //         JSON.stringify(
-    //     //             this.tasks.map(task => task.toJson())
-    //     //         )
-    //     //     )
-    //     // }
-    // }
 
-    @action
-    add() {
+    public createTask() {
         this.setSaving(true)
         this.api.newTask()
-            .then(model => {
-                this.tasks.push(model)
-                this.watchTask(model)
-            })
-            .catch(reason => console.error("Failed to create task"))
+            .then(model => this.addTask(model))
+            .catch(reason => console.error("Failed to create task: " + reason))
             .then(_ => this.setSaving(false))
+    }
+
+    @action
+    private addTask(model: TaskModel) {
+        this.tasks.push(model)
+        this.watchTask(model)
     }
 
     @action
     remove(task: TaskModel) {
         let indexOf = this.tasks.indexOf(task);
         if (indexOf > -1) {
-            this.tasks.splice(indexOf, 1)
+            let disposer = this.watchers.get(task.id);
+            if (disposer) {
+                disposer()
+                this.watchers.delete(task.id)
+            }
             this.api.deleteTask(task)
+
+            this.tasks.splice(indexOf, 1)
         }
     }
 

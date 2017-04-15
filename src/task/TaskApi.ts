@@ -1,11 +1,10 @@
 import {TaskModel} from "./TaskModel";
 import Axios from "axios";
 
-interface Todo {
+interface Task {
+    id: number,
     completed: boolean,
     title: string,
-    order?: number,
-    url?: string
 }
 
 export default class TaskApi {
@@ -20,8 +19,8 @@ export default class TaskApi {
         return new Promise<Array<TaskModel>>((resolve, reject) => {
             axios.get("/tasks")
                 .then(response => {
-                    const data: Array<Todo> = response.data
-                    resolve(data.map(todo => new TaskModel(todo.title, todo.completed)))
+                    const data: Array<Task> = response.data
+                    resolve(data.map(todo => new TaskModel(todo.id, todo.title, todo.completed)))
                 })
                 .catch(reason => reject(reason))
         })
@@ -31,21 +30,20 @@ export default class TaskApi {
     newTask(): Promise<TaskModel> {
         return this.axios.get("/create")
             .then(response => {
-                const task = response.data;
-                return new TaskModel(task.title, task.completed)
+                const task:Task = response.data;
+                return new TaskModel(task.id, task.title, task.completed)
             });
     }
 
     updateTask(task: TaskModel) {
-        this.axios.patch("/update", JSON.stringify(task), {
+        this.axios.post("/update", JSON.stringify(task), {
             headers: {'content-type': 'application/json'}
         })
             .catch(reason => console.error("Failed to update task: " + reason))
     }
 
     deleteTask(task: TaskModel) {
-        this.axios.delete(`/delete/${task.id}`, {
-            data: JSON.stringify(task)
-        }).catch(reason => console.error("Failed to delete task: " + reason))
+        this.axios.delete(`/tasks/${task.id}`)
+            .catch(reason => console.error("Failed to delete task: " + reason))
     }
 }

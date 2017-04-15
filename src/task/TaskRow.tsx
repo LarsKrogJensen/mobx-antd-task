@@ -4,18 +4,29 @@ import {DataGridCell, DataGridRow} from "../components/DataGrid";
 import {Checkbox, Input, Button} from "antd";
 import * as React from "react";
 import {autobind} from "core-decorators";
+import {TaskStore} from "./TaskStore";
 
 interface TaskRowProps {
+    store: TaskStore,
     model: TaskModel
-    onRemoveTask: (model: TaskModel) => void
 }
 
 @observer
 export default class TaskRow extends React.Component<TaskRowProps, {}> {
 
     @autobind
-    private onChangeTask(e) {
-        this.props.model.setTitle(e.target.value)
+    private onUpdateTitle(e) {
+        this.props.store.update(this.props.model, (model) => model.setTitle(e.target.value))
+    }
+
+    @autobind
+    private onToggleCompleted(e) {
+        this.props.store.update(this.props.model, (model) => model.setCompleted(e.target.checked))
+    }
+
+    @autobind
+    private onRemoveTask() {
+        this.props.store.remove(this.props.model)
     }
 
     render() {
@@ -24,11 +35,11 @@ export default class TaskRow extends React.Component<TaskRowProps, {}> {
         return (
             <DataGridRow>
                 <DataGridCell><Checkbox checked={model.completed}
-                                        onChange={() => model.setCompleted(!model.completed)}/></DataGridCell>
+                                        onChange={this.onToggleCompleted}/></DataGridCell>
                 <DataGridCell><Input placeholder="Enter task" value={model.title}
-                                     onChange={this.onChangeTask}/></DataGridCell>
+                                     onChange={this.onUpdateTitle}/></DataGridCell>
                 <DataGridCell><Button size="small"
-                                      onClick={() => this.props.onRemoveTask(model)}>remove</Button></DataGridCell>
+                                      onClick={this.onRemoveTask}>remove</Button></DataGridCell>
             </DataGridRow>);
     }
 
