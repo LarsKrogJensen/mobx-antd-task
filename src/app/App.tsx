@@ -3,6 +3,8 @@ import {Layout, Menu, Breadcrumb} from "antd";
 import AppHeader from "./AppHeader";
 import {hashHistory} from "react-router";
 import {SelectParam} from "antd/lib/menu";
+
+const logo = require("../assets/logo.svg")
 // import AppHeader from "./AppHeader";
 
 const {Header, Content, Footer} = Layout;
@@ -25,7 +27,7 @@ export class App extends React.Component<any, any> {
             <div className="app">
                 <Layout className="layout">
                     <Header className="header">
-                        <div className="logo"/>
+                        <img className="logo" src={logo}/>
                         <Menu
                             onSelect={this.onMenuSelected}
                             theme="dark"
