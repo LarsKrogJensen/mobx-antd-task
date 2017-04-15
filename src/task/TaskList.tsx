@@ -7,7 +7,8 @@ import {DataGrid, DataGridBody, DataGridHeader} from "../components/DataGrid";
 import TaskFooter from "./TaskFooter";
 import TaskHeaderRow from "./TaskHeaderRow";
 import TaskRow from "./TaskRow";
-import {TodoFilter} from "../constants/todos";
+import {TodoFilter} from "./tasks";
+import {autobind} from "core-decorators";
 
 interface TaskListProps {
     store: TaskStore;
@@ -17,19 +18,17 @@ interface TaskListProps {
 @observer
 export default class TaskList extends React.Component<TaskListProps, {}> {
 
-    constructor(props: TaskListProps, context: any) {
-        super(props, context);
-        this.removeTask = this.removeTask.bind(this)
-    }
 
+    @autobind
     removeTask(model: TaskModel) {
         this.props.store.remove(model);
     }
 
     render() {
 
-        const tasks: Array<TaskModel> = this.props.store.tasks;
-        const filter: TodoFilter = this.props.viewModel.filter;
+        const store = this.props.store;
+        const filter = this.props.viewModel.filter;
+
 
         return (
             <div className="task-list">
@@ -40,10 +39,10 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
                         <col width={80}/>
                     </colgroup>
                     <DataGridHeader>
-                        <TaskHeaderRow store={this.props.store}/>
+                        <TaskHeaderRow store={store}/>
                     </DataGridHeader>
-                    <DataGridBody loading={this.props.viewModel.loading}>
-                        {tasks.filter(model => filter == TodoFilter.ALL || (filter == TodoFilter.COMPLETED && model.done) || (filter == TodoFilter.ACTIVE && !model.done))
+                    <DataGridBody loading={store.loading}>
+                        {store.tasks.filter(model => filter == TodoFilter.ALL || (filter == TodoFilter.COMPLETED && model.completed) || (filter == TodoFilter.ACTIVE && !model.completed))
                             .map(model => <TaskRow key={model.id} model={model} onRemoveTask={this.removeTask}/>)}
                     </DataGridBody>
                 </DataGrid>

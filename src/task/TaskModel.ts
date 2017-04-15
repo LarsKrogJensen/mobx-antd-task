@@ -2,41 +2,46 @@ import {action, computed, observable} from "mobx";
 
 export class TaskModel {
     id: string = TaskModel.nextId().toString();
-    @observable text: string = "";
-    @observable done: boolean = false;
+    @observable title: string = "";
+    @observable completed: boolean = false;
 
+
+    constructor(title: string = '', done: boolean = false) {
+        this.setTitle(title);
+        this.setCompleted(done);
+    }
 
     @computed get isValid(): boolean {
-        // a text is required
-        return this.text !== ''
+        // a title is required
+        return this.title !== ''
     }
 
     @action
-    setDone(done: boolean) {
-        this.done = done;
+    setCompleted(done: boolean) {
+        this.completed = done;
     }
 
     @action
-    setText(text: string) {
-        this.text = text;
+    setTitle(text: string) {
+        this.title = text;
     }
 
     // this two methods will toJson and fromJson the todo
-    // to keep the example clean I have done them, but you should consider using
+    // to keep the example clean I have completed them, but you should consider using
     // https://github.com/mobxjs/serializr
     toJson() : object {
         return {
             id: this.id,
-            text: this.text,
-            done: this.done
+            text: this.title,
+            done: this.completed
         }
     }
 
     static fromJson(json: Object) {
         const todo = new TaskModel();
         todo.id = json['id'] || TaskModel.nextId();
-        todo.text = json['text'] || '';
-        todo.done = json['done'] || false;
+        todo.title = json['title'] || '';
+        todo.completed = json['completed'] || false;
         return todo
     }
 

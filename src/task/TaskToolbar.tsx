@@ -2,9 +2,10 @@ import {TaskStore} from "./TaskStore";
 import {observer} from "mobx-react";
 import * as React from "react";
 import TaskViewModel from "./TaskViewModel";
-import {Button, Checkbox, Radio} from "antd";
-import {TODO_FILTER_TITLES, TodoFilter} from "../constants/todos";
+import {message, Button, Checkbox, Radio} from "antd";
+import {TODO_FILTER_TITLES, TodoFilter} from "./tasks";
 import {autobind} from "core-decorators";
+
 
 
 interface TaskToolbarProps {
@@ -15,14 +16,8 @@ interface TaskToolbarProps {
 @observer
 export default class TaskToolbar extends React.Component<TaskToolbarProps, {}> {
 
-    constructor(props: TaskToolbarProps, context: any) {
-        super(props, context);
-        // this.handleNewTask = this.handleNewTask.bind(this);
-        this.onSaveTasks = this.onSaveTasks.bind(this);
-        this.onLoadTasks = this.onLoadTasks.bind(this);
-        this.handleFilterChange = this.handleFilterChange.bind(this);
-    }
 
+    @autobind
     handleFilterChange(e) {
         this.props.viewModel.setFilter(e.target.value)
     }
@@ -33,11 +28,13 @@ export default class TaskToolbar extends React.Component<TaskToolbarProps, {}> {
         this.props.store.add();
     }
 
-    onSaveTasks(e) {
-        e.preventDefault()
-        this.props.store.save()
-    }
+    // @autobind
+    // onSaveTasks(e) {
+    //     e.preventDefault()
+    //     this.props.store.save()
+    // }
 
+    @autobind
     onLoadTasks(e) {
         e.preventDefault()
         this.props.store.load()
@@ -48,9 +45,12 @@ export default class TaskToolbar extends React.Component<TaskToolbarProps, {}> {
         const vm = this.props.viewModel;
         return (
             <div className="task-toolbar">
-                <Button className="task-toolbar-item" type="primary" onClick={this.handleNewTask}>New task</Button>
-                <Button className="task-toolbar-item" onClick={this.onLoadTasks}>Load</Button>
-                <Button className="task-toolbar-item" onClick={this.onSaveTasks}>Save</Button>
+                <Button className="task-toolbar-item"
+                        type="primary"
+                        loading={this.props.store.saving}
+                        onClick={this.handleNewTask}>New task</Button>
+                <Button className="task-toolbar-item" onClick={this.onLoadTasks}>Reload</Button>
+                {/*<Button className="task-toolbar-item" onClick={this.onSaveTasks}>Save</Button>*/}
                 <div className="filler"/>
                 <Radio.Group value={vm.filter} onChange={this.handleFilterChange}>
                     <Radio.Button value={TodoFilter.ALL}>{TODO_FILTER_TITLES[TodoFilter.ALL]}</Radio.Button>

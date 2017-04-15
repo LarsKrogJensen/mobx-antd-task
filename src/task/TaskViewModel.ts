@@ -1,17 +1,11 @@
 import {action, observable} from "mobx";
-import {TodoFilter} from "../constants/todos";
+import {TodoFilter} from "./tasks";
 
 export default class TaskViewModel {
 
     @observable
-    loading: boolean = false;
-    @observable
     filter: TodoFilter = TodoFilter.ALL
 
-    @action
-    toggleLoading() {
-        this.loading = !this.loading;
-    }
 
     @action
     setFilter(filter: TodoFilter) {

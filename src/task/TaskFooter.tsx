@@ -4,6 +4,7 @@ import {TaskStore} from "./TaskStore";
 import {Badge, Checkbox} from "antd";
 import {DataGridFooter} from "../components/DataGrid";
 import TaskViewModel from "./TaskViewModel";
+import {autobind} from "core-decorators";
 
 
 export interface TaskFooterProps {
@@ -13,14 +14,10 @@ export interface TaskFooterProps {
 
 @observer
 export default class TaskFooter extends React.Component<TaskFooterProps, {}> {
-
-    constructor(props: TaskFooterProps, context: any) {
-        super(props, context);
-        this.onToggleLoading = this.onToggleLoading.bind(this);
-    }
-
+    
+    @autobind
     onToggleLoading(e) {
-        this.props.viewModel.toggleLoading()
+        this.props.store.toggleLoading()
     }
 
     render() {
@@ -37,7 +34,7 @@ export default class TaskFooter extends React.Component<TaskFooterProps, {}> {
                     <div className="task-footer-item">Remains</div>
                     <div className="filler"/>
                     <Checkbox className="task-toolbar-item"
-                              checked={this.props.viewModel.loading}
+                              checked={this.props.store.loading}
                               onChange={this.onToggleLoading}>Show Loading</Checkbox>
                 </div>
             </DataGridFooter>

@@ -4,6 +4,7 @@ import {observer} from "mobx-react";
 import * as React from "react";
 import {Checkbox} from "antd"
 import {DataGridHeaderCell, DataGridHeaderRow} from "../components/DataGrid";
+import {autobind} from "core-decorators";
 
 
 interface  TaskHeaderRowProps {
@@ -13,18 +14,13 @@ interface  TaskHeaderRowProps {
 @observer
 export default class TaskHeaderRow extends React.Component<TaskHeaderRowProps, undefined> {
 
-
-    constructor(props: TaskHeaderRowProps, context: any) {
-        super(props, context);
-        this.handleCheckChange = this.handleCheckChange.bind(this);
-    }
-
+    @autobind
     handleCheckChange() {
         const store = this.props.store;
         const done = store.completedCount;
         const total = store.tasks.length;
 
-        store.tasks.forEach(model => model.setDone(done < total))
+        store.tasks.forEach(model => model.setCompleted(done < total))
     }
 
     renderCheckbox(): JSX.Element {

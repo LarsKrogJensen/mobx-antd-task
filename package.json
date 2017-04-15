@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "antd": "^2.9.1",
+    "axios": "^0.16.1",
     "classnames": "^2.2.5",
     "core-decorators": "^0.17.0",
     "flexbox-react": "^4.3.1",
