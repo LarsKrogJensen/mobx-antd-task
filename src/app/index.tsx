@@ -6,11 +6,11 @@ import {Router, Route, IndexRedirect, hashHistory} from 'react-router';
 import {App} from './App';
 import {STORE_NEWS, STORE_TASK} from '../constants/stores';
 import {TaskStore} from "../task/TaskStore";
-import "./theme.less";
 import NewsView from "../hnews/NewsView";
 import NewsStore from "../hnews/NewsStore";
 import TaskView from "../task/TaskView";
 import NextView from "../next/NextView"
+import "./theme.less";
 
 // enable MobX strict mode
 useStrict(true);

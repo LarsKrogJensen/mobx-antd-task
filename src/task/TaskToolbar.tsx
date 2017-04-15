@@ -25,7 +25,8 @@ export default class TaskToolbar extends React.Component<TaskToolbarProps, {}> {
     @autobind
     handleNewTask(e: React.FormEvent<HTMLInputElement>) {
         e.preventDefault()
-        this.props.store.createTask();
+        let store: TaskStore= this.props.store;
+        store.createTask();
     }
 
     // @autobind

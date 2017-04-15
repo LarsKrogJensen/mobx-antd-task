@@ -30,16 +30,15 @@ export default class TaskApi {
     newTask(): Promise<TaskModel> {
         return this.axios.get("/create")
             .then(response => {
-                const task:Task = response.data;
+                const task: Task = response.data;
                 return new TaskModel(task.id, task.title, task.completed)
             });
     }
 
     updateTask(task: TaskModel) {
-        this.axios.post("/update", JSON.stringify(task), {
+        this.axios.post("/dispatch", JSON.stringify(task), {
             headers: {'content-type': 'application/json'}
-        })
-            .catch(reason => console.error("Failed to update task: " + reason))
+        }).catch(reason => console.error("Failed to dispatch task: " + reason))
     }
 
     deleteTask(task: TaskModel) {

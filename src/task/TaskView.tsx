@@ -7,6 +7,7 @@ import TaskList from "./TaskList";
 import {STORE_TASK} from "../constants/stores";
 import {inject} from "mobx-react/custom";
 import "./task.less"
+import {Alert} from "antd";
 
 interface TaskViewProps {
     // injected
@@ -18,10 +19,18 @@ interface TaskViewProps {
 @observer
 export default class TaskView extends React.Component<TaskViewProps, {}> {
     private viewModel = new TaskViewModel();
+
     render() {
         const store: TaskStore = this.props[STORE_TASK];
 
         return <div>
+            {store.errorMessage ?
+                <Alert className="task-view-alert"
+                       message="Error"
+                       description={store.errorMessage}
+                       type="error"
+                       showIcon/> : null
+            }
             <TaskToolbar viewModel={this.viewModel} store={store}/>
             <TaskList viewModel={this.viewModel} store={store}/>
         </div>

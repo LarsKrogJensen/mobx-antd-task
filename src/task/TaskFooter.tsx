@@ -30,6 +30,7 @@ export default class TaskFooter extends React.Component<TaskFooterProps, {}> {
                     <div className="task-footer-item">Completed</div>
                     <Badge className="task-footer-item"
                            count={this.props.store.activeTodoCount}
+                           showZero={true}
                            style={{backgroundColor: '#87d068'}}/>
                     <div className="task-footer-item">Remains</div>
                 </div>

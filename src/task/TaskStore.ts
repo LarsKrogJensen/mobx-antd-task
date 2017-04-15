@@ -16,6 +16,9 @@ export class TaskStore {
     @observable
     saving: boolean = false;
 
+    @observable
+    errorMessage: string = '';
+
     constructor(api: TaskApi = new TaskApi) {
         this.api = api;
         this.load()
@@ -29,8 +32,8 @@ export class TaskStore {
 
     @action
     replaceAll(tasks: Array<TaskModel>) {
-        this.watchers.forEach((value: IReactionDisposer) => value());
-        this.watchers.clear();
+        // this.watchers.forEach((value: IReactionDisposer) => value());
+        // this.watchers.clear();
         this.tasks.splice(0, this.tasks.length)
 
         tasks.forEach(task => {
@@ -55,7 +58,17 @@ export class TaskStore {
         this.saving = saving;
     }
 
-    update(model: TaskModel, dispatcher: (model:TaskModel) => void) {
+    @action
+    setErrorMessage(msg: string) {
+        this.errorMessage = msg;
+    }
+
+    @action
+    clearErrorMessage() {
+        this.errorMessage = '';
+    }
+
+    dispatch(model: TaskModel, dispatcher: (model:TaskModel) => void) {
         dispatcher(model);
         this.api.updateTask(model);
     }
@@ -63,19 +76,20 @@ export class TaskStore {
     @action
     load() {
         this.setLoading(true)
-
+        this.clearErrorMessage();
         this.api.loadTasks()
             .then(tasks => this.replaceAll(tasks))
-            .catch(reason => console.log(reason))
+            .catch((reason:Error) => this.setErrorMessage(reason.message))
             .then(_ => this.setLoading(false))
     }
 
 
     public createTask() {
         this.setSaving(true)
+        this.clearErrorMessage();
         this.api.newTask()
             .then(model => this.addTask(model))
-            .catch(reason => console.error("Failed to create task: " + reason))
+            .catch((reason:Error) => this.setErrorMessage(reason.message))
             .then(_ => this.setSaving(false))
     }
 
@@ -101,10 +115,7 @@ export class TaskStore {
     }
 
     @computed get activeTodoCount(): number {
-        return this.tasks.reduce(
-            (sum, todo) => sum + (todo.completed ? 0 : 1),
-            0
-        )
+        return this.tasks.reduce((sum, todo) => sum + (todo.completed ? 0 : 1), 0)
     }
 
     @computed get completedCount(): number {

@@ -16,21 +16,30 @@ export default class TaskRow extends React.Component<TaskRowProps, {}> {
 
     @autobind
     private onUpdateTitle(e) {
-        this.props.store.update(this.props.model, (model) => model.setTitle(e.target.value))
+        const store: TaskStore = this.props.store;
+        const model: TaskModel = this.props.model;
+
+        store.dispatch(model, (model) => model.setTitle(e.target.value))
     }
 
     @autobind
     private onToggleCompleted(e) {
-        this.props.store.update(this.props.model, (model) => model.setCompleted(e.target.checked))
+        const store: TaskStore = this.props.store;
+        const model: TaskModel = this.props.model;
+
+        store.dispatch(model, (model) => model.setCompleted(e.target.checked))
     }
 
     @autobind
     private onRemoveTask() {
-        this.props.store.remove(this.props.model)
+        const store: TaskStore = this.props.store;
+        const model: TaskModel = this.props.model;
+
+        store.remove(model)
     }
 
     render() {
-        let model = this.props.model;
+        let model: TaskModel = this.props.model;
 
         return (
             <DataGridRow>
