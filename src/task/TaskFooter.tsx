@@ -32,10 +32,6 @@ export default class TaskFooter extends React.Component<TaskFooterProps, {}> {
                            count={this.props.store.activeTodoCount}
                            style={{backgroundColor: '#87d068'}}/>
                     <div className="task-footer-item">Remains</div>
-                    <div className="filler"/>
-                    <Checkbox className="task-toolbar-item"
-                              checked={this.props.store.loading}
-                              onChange={this.onToggleLoading}>Show Loading</Checkbox>
                 </div>
             </DataGridFooter>
 
