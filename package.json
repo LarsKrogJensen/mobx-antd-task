@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server -d --history-api-fallback --colors --progress --port 3000",
     "build": "webpack -p --progress --colors",
-    "serve": "pushstate-server dist 9000"
+    "serve": "pushstate-server dist 9000",
+    "gql-gen": "gql-gen --url https://larskj-gql.herokuapp.com/graphql --header \"Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPaWtLQWZxSFkyeHBaVzUwU1VSQ2MybDRpMk55WldGMGFXOXVWR2x0WlZ3eU1ERTNMVEEwTFRFMlZERXhPalV6T2pJMkxqazRPU3N3TWpvd01Qcz0uYjhlYjUzYzJkYWFlZjQ1ZDVmZGI5Y2I1ZWIwOWU4YzY0MzJkNzIzMyIsImlhdCI6MTQ5MjMzNjQwNywiZXhwIjoxNDkyMzM5NzA3fQ==.WL8rRo2gtG43UQ5VX8zTH4thYt4kdnZ7R8ci-efwhaA=\" --template typescript-single --out ./src/typings.ts"
   },
   "license": "MIT",
   "devDependencies": {
@@ -23,6 +24,7 @@
     "css-loader": "^0.28.0",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "file-loader": "^0.11.1",
+    "graphql-code-generator": "^0.5.1",
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.28.0",
     "less": "^2.7.2",
@@ -38,6 +40,7 @@
     "react-hot-loader": "next",
     "style-loader": "^0.16.1",
     "tslint": "^5.1.0",
+    "tslint-loader": "^3.5.2",
     "tslint-react": "^2.5.0",
     "typescript": "^2.2.2",
     "url-loader": "^0.5.7",

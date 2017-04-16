@@ -36,10 +36,15 @@ module.exports = {
         // (jsnext:main directs not usually distributable es6 format, but es6 sources)
         mainFields: ['module', 'browser', 'main']
     },
-
     module: {
         loaders: [
             // .ts, .tsx
+            {
+                test: /\.tsx?$/,
+                enforce: 'pre',
+                loader: 'tslint-loader',
+                options: {/* Loader options go here */}
+            },
             {
                 test: /\.tsx?$/,
                 use: isProduction
