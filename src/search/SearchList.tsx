@@ -2,11 +2,13 @@ import * as React from "react"
 import {Icon, Table} from "antd"
 import SearchStore from "./SearchStore"
 import {SearchItem} from "../api/typings"
+import {observer} from "mobx-react"
 
 interface ISearchListProps {
     store: SearchStore
 }
 
+@observer
 export default class SearchList extends React.Component<ISearchListProps, {}> {
     private readonly locale = {
         emptyText: <span><Icon type="frown-o"/>Nothing found</span>,
@@ -14,6 +16,7 @@ export default class SearchList extends React.Component<ISearchListProps, {}> {
 
     public render() {
         const store: SearchStore = this.props.store
+
 
         return (
             <SearchTable dataSource={store.searchResult}

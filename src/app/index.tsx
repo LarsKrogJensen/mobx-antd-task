@@ -15,11 +15,13 @@ import {TaskStore} from "../task/TaskStore";
 import {App} from './App';
 import "./theme.less";
 import SearchStore from "../search/SearchStore"
+import AuthApi from "../api/AuthApi"
 
 // enable MobX strict mode
 useStrict(true);
 
-const dataApi: DataApi = new DataApi()
+const authApi: AuthApi = new AuthApi()
+const dataApi: DataApi = new DataApi(authApi)
 
 const rootStores = {
     [STORE_TASK]: new TaskStore(),

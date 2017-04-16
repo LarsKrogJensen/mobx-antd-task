@@ -54,6 +54,12 @@ module.exports = {
                         'awesome-typescript-loader'
                     ]
             },
+            // graphql
+            {
+                test: /\.(graphql|gql)$/,
+                exclude: /node_modules/,
+                loader: 'graphql-tag/loader'
+            },
             // css
             {
                 test: /\.css$/,

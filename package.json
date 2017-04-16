@@ -9,7 +9,7 @@
     "start": "webpack-dev-server -d --history-api-fallback --colors --progress --port 3000",
     "build": "webpack -p --progress --colors",
     "serve": "pushstate-server dist 9000",
-    "gql-gen": "gql-gen --url https://larskj-gql.herokuapp.com/graphql --header \"Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPaWtLQWZxSFkyeHBaVzUwU1VSQ2MybDRpMk55WldGMGFXOXVWR2x0WlZ3eU1ERTNMVEEwTFRFMlZERXhPalV6T2pJMkxqazRPU3N3TWpvd01Qcz0uYjhlYjUzYzJkYWFlZjQ1ZDVmZGI5Y2I1ZWIwOWU4YzY0MzJkNzIzMyIsImlhdCI6MTQ5MjMzNjQwNywiZXhwIjoxNDkyMzM5NzA3fQ==.WL8rRo2gtG43UQ5VX8zTH4thYt4kdnZ7R8ci-efwhaA=\" --template typescript-single --out ./src/typings.ts"
+    "gql-gen": "gql-gen --url https://larskj-gql.herokuapp.com/mockql --template typescript-single --out ./src/api/atypings.ts"
   },
   "license": "MIT",
   "devDependencies": {

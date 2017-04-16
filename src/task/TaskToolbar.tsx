@@ -46,9 +46,7 @@ export default class TaskToolbar extends React.Component<ITaskToolbarProps, {}> 
     private handleFilterChange(e) {
         this.props.viewModel.setFilter(e.target.value)
     }
-
-
-
+    
     @autobind
     private onLoadTasks(e) {
         e.preventDefault()
