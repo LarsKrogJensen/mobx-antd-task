@@ -1,14 +1,14 @@
 import {action, observable} from "mobx";
 import {TodoFilter} from "./tasks";
 
-export default class TaskViewModel {
+export default class TaskPageModel {
 
     @observable
-    filter: TodoFilter = TodoFilter.ALL
+    public filter: TodoFilter = TodoFilter.ALL
 
 
     @action
-    setFilter(filter: TodoFilter) {
+    public setFilter(filter: TodoFilter) {
         this.filter = filter;
     }
 }

@@ -1,30 +1,28 @@
-import * as React from "react";
-import {TaskStore} from "./TaskStore";
-import TaskViewModel from "./TaskViewModel";
-import {observer} from "mobx-react";
-import {TaskModel} from "./TaskModel";
-import {DataGrid, DataGridBody, DataGridHeader} from "../components/DataGrid";
-import TaskFooter from "./TaskFooter";
-import TaskHeaderRow from "./TaskHeaderRow";
-import TaskRow from "./TaskRow";
-import {TodoFilter} from "./tasks";
-import {autobind} from "core-decorators";
+import {observer} from "mobx-react"
+import * as React from "react"
+import {DataGrid, DataGridBody, DataGridHeader} from "../components/DataGrid"
+import TaskFooter from "./TaskFooter"
+import TaskHeaderRow from "./TaskHeaderRow"
+import TaskViewModel from "./TaskPageModel"
+import TaskRow from "./TaskRow"
+import {TodoFilter} from "./tasks"
+import {TaskStore} from "./TaskStore"
 
-interface TaskListProps {
+interface ITaskListProps {
     store: TaskStore;
     viewModel: TaskViewModel
 }
 
 @observer
-export default class TaskList extends React.Component<TaskListProps, {}> {
-    render() {
+export default class TaskList extends React.Component<ITaskListProps, {}> {
+    public render() {
 
-        const store = this.props.store;
-        const filter = this.props.viewModel.filter;
+        const store = this.props.store
+        const filter = this.props.viewModel.filter
 
         return (
             <div className="task-list">
-                <DataGrid  footer={this.renderFooter()}>
+                <DataGrid footer={this.renderFooter()}>
                     <colgroup>
                         <col width={80}/>
                         <col/>
@@ -34,12 +32,17 @@ export default class TaskList extends React.Component<TaskListProps, {}> {
                         <TaskHeaderRow store={store}/>
                     </DataGridHeader>
                     <DataGridBody loading={store.loading}>
-                        {store.tasks.filter(model => filter == TodoFilter.ALL || (filter == TodoFilter.COMPLETED && model.completed) || (filter == TodoFilter.ACTIVE && !model.completed))
-                            .map(model => <TaskRow key={model.id} store={store} model={model}/>)}
+                        {store.tasks.filter(model => {
+                            return (
+                                filter === TodoFilter.ALL ||
+                                (filter === TodoFilter.COMPLETED && model.completed) ||
+                                (filter === TodoFilter.ACTIVE && !model.completed)
+                            )
+                        }).map(model => <TaskRow key={model.id} store={store} model={model}/>)}
                     </DataGridBody>
                 </DataGrid>
             </div>
-        );
+        )
     }
 
     private renderFooter() {

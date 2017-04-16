@@ -1,49 +1,22 @@
-import {TaskStore} from "./TaskStore";
-import {observer} from "mobx-react";
-import * as React from "react";
-import TaskViewModel from "./TaskViewModel";
-import {message, Button, Checkbox, Radio} from "antd";
-import {TODO_FILTER_TITLES, TodoFilter} from "./tasks";
-import {autobind} from "core-decorators";
+import {Button, Radio} from "antd"
+import {autobind} from "core-decorators"
+import {observer} from "mobx-react"
+import * as React from "react"
+import TaskViewModel from "./TaskPageModel"
+import {TODO_FILTER_TITLES, TodoFilter} from "./tasks"
+import {TaskStore} from "./TaskStore"
 
 
-
-interface TaskToolbarProps {
+interface ITaskToolbarProps {
     store: TaskStore;
     viewModel: TaskViewModel
 }
 
 @observer
-export default class TaskToolbar extends React.Component<TaskToolbarProps, {}> {
+export default class TaskToolbar extends React.Component<ITaskToolbarProps, {}> {
 
-
-    @autobind
-    handleFilterChange(e) {
-        this.props.viewModel.setFilter(e.target.value)
-    }
-
-    @autobind
-    handleNewTask(e: React.FormEvent<HTMLInputElement>) {
-        e.preventDefault()
-        let store: TaskStore= this.props.store;
-        store.createTask();
-    }
-
-    // @autobind
-    // onSaveTasks(e) {
-    //     e.preventDefault()
-    //     this.props.store.save()
-    // }
-
-    @autobind
-    onLoadTasks(e) {
-        e.preventDefault()
-        this.props.store.load()
-    }
-
-
-    render() {
-        const vm = this.props.viewModel;
+    public render() {
+        const vm = this.props.viewModel
         return (
             <div className="task-toolbar">
                 <Button className="task-toolbar-item"
@@ -59,6 +32,26 @@ export default class TaskToolbar extends React.Component<TaskToolbarProps, {}> {
                     <Radio.Button value={TodoFilter.COMPLETED}>{TODO_FILTER_TITLES[TodoFilter.COMPLETED]}</Radio.Button>
                 </Radio.Group>
             </div>
-        );
+        )
+    }
+
+    @autobind
+    private handleNewTask(e: React.FormEvent<HTMLInputElement>) {
+        e.preventDefault()
+        const store: TaskStore = this.props.store
+        store.createTask()
+    }
+
+    @autobind
+    private handleFilterChange(e) {
+        this.props.viewModel.setFilter(e.target.value)
+    }
+
+
+
+    @autobind
+    private onLoadTasks(e) {
+        e.preventDefault()
+        this.props.store.load()
     }
 }

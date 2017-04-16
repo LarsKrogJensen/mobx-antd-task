@@ -1,26 +1,21 @@
-import * as React from "react";
-import {observer} from "mobx-react";
-import {TaskStore} from "./TaskStore";
-import {Badge, Checkbox} from "antd";
-import {DataGridFooter} from "../components/DataGrid";
-import TaskViewModel from "./TaskViewModel";
-import {autobind} from "core-decorators";
+import {Badge, Checkbox} from "antd"
+import {autobind} from "core-decorators"
+import {observer} from "mobx-react"
+import * as React from "react"
+import {DataGridFooter} from "../components/DataGrid"
+import TaskViewModel from "./TaskPageModel"
+import {TaskStore} from "./TaskStore"
 
 
-export interface TaskFooterProps {
+export interface ITaskFooterProps {
     store: TaskStore
     viewModel: TaskViewModel
 }
 
 @observer
-export default class TaskFooter extends React.Component<TaskFooterProps, {}> {
-    
-    @autobind
-    onToggleLoading(e) {
-        this.props.store.toggleLoading()
-    }
+export default class TaskFooter extends React.Component<ITaskFooterProps, {}> {
 
-    render() {
+    public render() {
         return (
             <DataGridFooter>
                 <div className="task-footer">
@@ -36,6 +31,6 @@ export default class TaskFooter extends React.Component<TaskFooterProps, {}> {
                 </div>
             </DataGridFooter>
 
-        );
+        )
     }
 }

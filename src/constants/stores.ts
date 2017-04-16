@@ -1,3 +1,3 @@
-export const STORE_NEWS = 'news';
-export const STORE_ROUTER = 'router';
-export const STORE_TASK = 'task';
+export const STORE_NEWS = 'store_news';
+export const STORE_ROUTER = 'store_router';
+export const STORE_TASK = 'store_task';

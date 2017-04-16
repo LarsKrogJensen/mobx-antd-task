@@ -1,45 +1,21 @@
-import {TaskModel} from "./TaskModel";
-import {observer} from "mobx-react";
-import {DataGridCell, DataGridRow} from "../components/DataGrid";
-import {Checkbox, Input, Button} from "antd";
-import * as React from "react";
-import {autobind} from "core-decorators";
-import {TaskStore} from "./TaskStore";
+import {Button, Checkbox, Input} from "antd"
+import {autobind} from "core-decorators"
+import {observer} from "mobx-react"
+import * as React from "react"
+import {DataGridCell, DataGridRow} from "../components/DataGrid"
+import {TaskModel} from "./TaskModel"
+import {TaskStore} from "./TaskStore"
 
-interface TaskRowProps {
+interface ITaskRowProps {
     store: TaskStore,
     model: TaskModel
 }
 
 @observer
-export default class TaskRow extends React.Component<TaskRowProps, {}> {
+export default class TaskRow extends React.Component<ITaskRowProps, {}> {
 
-    @autobind
-    private onUpdateTitle(e) {
-        const store: TaskStore = this.props.store;
-        const model: TaskModel = this.props.model;
-
-        store.dispatch(model, (model) => model.setTitle(e.target.value))
-    }
-
-    @autobind
-    private onToggleCompleted(e) {
-        const store: TaskStore = this.props.store;
-        const model: TaskModel = this.props.model;
-
-        store.dispatch(model, (model) => model.setCompleted(e.target.checked))
-    }
-
-    @autobind
-    private onRemoveTask() {
-        const store: TaskStore = this.props.store;
-        const model: TaskModel = this.props.model;
-
-        store.remove(model)
-    }
-
-    render() {
-        let model: TaskModel = this.props.model;
+    public render() {
+        const model: TaskModel = this.props.model
 
         return (
             <DataGridRow>
@@ -49,8 +25,30 @@ export default class TaskRow extends React.Component<TaskRowProps, {}> {
                                      onChange={this.onUpdateTitle}/></DataGridCell>
                 <DataGridCell><Button size="small"
                                       onClick={this.onRemoveTask}>remove</Button></DataGridCell>
-            </DataGridRow>);
+            </DataGridRow>)
     }
 
+    @autobind
+    private onUpdateTitle(e) {
+        const store: TaskStore = this.props.store
+        const model: TaskModel = this.props.model
 
+        store.dispatch(model, taskModel => taskModel.setTitle(e.target.value))
+    }
+
+    @autobind
+    private onToggleCompleted(e) {
+        const store: TaskStore = this.props.store
+        const model: TaskModel = this.props.model
+
+        store.dispatch(model, taskModel => taskModel.setCompleted(e.target.checked))
+    }
+
+    @autobind
+    private onRemoveTask() {
+        const store: TaskStore = this.props.store
+        const model: TaskModel = this.props.model
+
+        store.remove(model)
+    }
 }

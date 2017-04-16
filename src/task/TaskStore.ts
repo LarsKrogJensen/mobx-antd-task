@@ -1,109 +1,64 @@
-import {action, autorun, computed, IReactionDisposer, observable} from "mobx";
-import {TaskModel} from "./TaskModel";
-import TaskApi from "./TaskApi";
+import {action, computed, IReactionDisposer, observable} from "mobx"
+import TaskApi from "./TaskApi"
+import {TaskModel} from "./TaskModel"
 
 export class TaskStore {
-    private api: TaskApi;
-
-    private readonly watchers: Map<number, IReactionDisposer> = new Map();
+    @observable
+    public readonly tasks: TaskModel[] = []
 
     @observable
-    readonly tasks: Array<TaskModel> = []
+    public loading: boolean = false
 
     @observable
-    loading: boolean = false;
+    public saving: boolean = false
 
     @observable
-    saving: boolean = false;
+    public errorMessage: string = ''
 
-    @observable
-    errorMessage: string = '';
+    private api: TaskApi
+    private readonly watchers: Map<number, IReactionDisposer> = new Map()
 
-    constructor(api: TaskApi = new TaskApi) {
-        this.api = api;
+
+    constructor(api: TaskApi = new TaskApi()) {
+        this.api = api
         this.load()
         this.remove = this.remove.bind(this)
     }
 
-    @action
-    toggleLoading() {
-        this.loading = !this.loading;
+    // @action
+    // public toggleLoading() {
+    //     this.loading = !this.loading
+    // }
+
+    public dispatch(model: TaskModel, dispatcher: (model: TaskModel) => void) {
+        dispatcher(model)
+        this.api.updateTask(model)
     }
 
     @action
-    replaceAll(tasks: Array<TaskModel>) {
-        // this.watchers.forEach((value: IReactionDisposer) => value());
-        // this.watchers.clear();
-        this.tasks.splice(0, this.tasks.length)
-
-        tasks.forEach(task => {
-            this.addTask(task)
-        })
-    }
-
-    private watchTask(task: TaskModel) {
-        // const disposer = autorun(() => {
-        //     this.api.updateTask(task)
-        // });
-        // this.watchers.set(task.id, disposer);
-    }
-
-    @action
-    setLoading(loading: boolean) {
-        this.loading = loading;
-    }
-
-    @action
-    setSaving(saving: boolean) {
-        this.saving = saving;
-    }
-
-    @action
-    setErrorMessage(msg: string) {
-        this.errorMessage = msg;
-    }
-
-    @action
-    clearErrorMessage() {
-        this.errorMessage = '';
-    }
-
-    dispatch(model: TaskModel, dispatcher: (model:TaskModel) => void) {
-        dispatcher(model);
-        this.api.updateTask(model);
-    }
-
-    @action
-    load() {
+    public load() {
         this.setLoading(true)
-        this.clearErrorMessage();
+        this.clearErrorMessage()
         this.api.loadTasks()
             .then(tasks => this.replaceAll(tasks))
-            .catch((reason:Error) => this.setErrorMessage(reason.message))
+            .catch((reason: Error) => this.setErrorMessage(reason.message))
             .then(_ => this.setLoading(false))
     }
 
-
     public createTask() {
         this.setSaving(true)
-        this.clearErrorMessage();
+        this.clearErrorMessage()
         this.api.newTask()
             .then(model => this.addTask(model))
-            .catch((reason:Error) => this.setErrorMessage(reason.message))
+            .catch((reason: Error) => this.setErrorMessage(reason.message))
             .then(_ => this.setSaving(false))
     }
 
     @action
-    private addTask(model: TaskModel) {
-        this.tasks.push(model)
-        this.watchTask(model)
-    }
-
-    @action
-    remove(task: TaskModel) {
-        let indexOf = this.tasks.indexOf(task);
+    public remove(task: TaskModel) {
+        const indexOf = this.tasks.indexOf(task)
         if (indexOf > -1) {
-            let disposer = this.watchers.get(task.id);
+            const disposer = this.watchers.get(task.id)
             if (disposer) {
                 disposer()
                 this.watchers.delete(task.id)
@@ -114,11 +69,47 @@ export class TaskStore {
         }
     }
 
+    @action
+    private replaceAll(tasks: TaskModel[]) {
+        // this.watchers.forEach((value: IReactionDisposer) => value());
+        // this.watchers.clear();
+        this.tasks.splice(0, this.tasks.length)
+
+        tasks.forEach(task => {
+            this.addTask(task)
+        })
+    }
+
+    @action
+    private setLoading(loading: boolean) {
+        this.loading = loading
+    }
+
+    @action
+    private setSaving(saving: boolean) {
+        this.saving = saving
+    }
+
+    @action
+    private setErrorMessage(msg: string) {
+        this.errorMessage = msg
+    }
+
+    @action
+    private clearErrorMessage() {
+        this.errorMessage = ''
+    }
+
+    @action
+    private addTask(model: TaskModel) {
+        this.tasks.push(model)
+    }
+
     @computed get activeTodoCount(): number {
         return this.tasks.reduce((sum, todo) => sum + (todo.completed ? 0 : 1), 0)
     }
 
     @computed get completedCount(): number {
-        return this.tasks.length - this.activeTodoCount;
+        return this.tasks.length - this.activeTodoCount
     }
 }

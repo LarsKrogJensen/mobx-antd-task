@@ -1,10 +1,10 @@
 import * as React from "react";
-export interface NewsProps {
+export interface INewsProps {
 
 }
 
-export default class NewsView extends React.Component<NewsProps, {}> {
-    render() {
+export default class NewsView extends React.Component<INewsProps, {}> {
+    public render() {
         return <div>News View</div>
     }
 }

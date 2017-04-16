@@ -1,12 +1,12 @@
-import * as React from "react";
-import {LoadingProps, default as withLoading} from "./Loading";
+import * as React from "react"
+import {default as withLoading} from "./Loading"
 
-export interface DataGridProps{
+export interface IDataGridProps {
     footer?: JSX.Element
 }
 
-export class DataGrid extends React.Component<DataGridProps, {}> {
-    render() {
+export class DataGrid extends React.Component<IDataGridProps, {}> {
+    public render() {
         return (
             <div className="ant-table ant-table-middle ant-table-bordered ant-table-scroll-position-left">
                 <div className="ant-table-content">
@@ -18,7 +18,7 @@ export class DataGrid extends React.Component<DataGridProps, {}> {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
@@ -27,7 +27,7 @@ export const DataGridFooter = (props) => {
         <div className="ant-table-footer">
             {props.children}
         </div>
-    );
+    )
 }
 
 export const DataGridHeader = (props) => {
@@ -35,7 +35,7 @@ export const DataGridHeader = (props) => {
         <thead className="ant-table-thead">
         {props.children}
         </thead>
-    );
+    )
 }
 
 export const DataGridHeaderRow = (props) => {
@@ -43,7 +43,7 @@ export const DataGridHeaderRow = (props) => {
         <tr>
             {props.children}
         </tr>
-    );
+    )
 }
 
 export const DataGridHeaderCell = (props) => {
@@ -51,7 +51,7 @@ export const DataGridHeaderCell = (props) => {
         <th>
             {props.children}
         </th>
-    );
+    )
 }
 
 export const DataGridRow = (props) => {
@@ -59,7 +59,7 @@ export const DataGridRow = (props) => {
         <tr className="ant-table-row  ant-table-row-level-0">
             {props.children}
         </tr>
-    );
+    )
 }
 
 export const DataGridCell = (props) => {
@@ -68,9 +68,8 @@ export const DataGridCell = (props) => {
             <span className="ant-table-row-indent indent-level-0"
                   style={{paddingLeft: "0px"}}>{props.children}</span>
         </td>
-    );
+    )
 }
-
 
 
 export const DataGridBody = withLoading((props) => {
