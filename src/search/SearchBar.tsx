@@ -3,7 +3,7 @@ import {Input} from "antd"
 import SearchStore from "./SearchStore"
 import {autobind, debounce} from "core-decorators"
 
-const Search = Input.Search;
+const Search = Input.Search
 
 interface ISearchBarProps {
     store: SearchStore
@@ -14,12 +14,13 @@ export default class SearchBar extends React.Component<ISearchBarProps, {}> {
         const store: SearchStore = this.props.store
 
         return (
-            <Search
-                placeholder="input search text"
-                style={{width: 200}}
-                defaultValue={store.searchQuery}
-                onChange={this.onSearchTextChanged}
-                onSearch={(value: any) => console.log(value)}/>
+
+            <div className="search-text">
+                <Search placeholder="input search text"
+                        defaultValue={store.searchQuery}
+                        onChange={this.onSearchTextChanged}
+                        onSearch={(value: any) => console.log(value)}/>
+            </div>
         )
     }
 

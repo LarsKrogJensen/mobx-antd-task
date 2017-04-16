@@ -5,6 +5,7 @@ import {STORE_SEARCH} from "../constants/stores"
 import SearchList from "./SearchList"
 import SearchStore from "./SearchStore"
 import SearchBar from "./SearchBar"
+import "./search.less"
 
 interface ISearchPageProps {
     // search store injected

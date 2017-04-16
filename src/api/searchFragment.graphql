@@ -1,0 +1,6 @@
+fragment SearchInfo on SearchItem {
+    id
+    name
+    score
+    longName
+}

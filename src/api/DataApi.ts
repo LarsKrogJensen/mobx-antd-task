@@ -1,15 +1,14 @@
 import ApolloClient, {ApolloQueryResult, createNetworkInterface, WatchQueryOptions} from 'apollo-client'
 import {QueryType, SearchItem} from "./typings"
-import {SEARCH} from "./queries"
 import AuthApi from "./AuthApi"
+import {API_URL} from "./apiConf"
 const searchQuery = require("./search.graphql")
 
 export default class DataApi {
-    // private readonly authApi: AuthApi
     private readonly client: ApolloClient
 
     constructor(authApi: AuthApi) {
-        const networkInterface = createNetworkInterface({uri: 'https://larskj-gql.herokuapp.com/graphql'})
+        const networkInterface = createNetworkInterface({uri: API_URL + "/graphql"})
         networkInterface.use([{
             applyMiddleware(req, next) {
                 if (!req.options.headers) {

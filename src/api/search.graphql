@@ -1,11 +1,7 @@
+#import "./searchFragment.graphql"
+
 query Search($query: String!) {
     listingSearch(searchQuery: $query) {
-        id
-        name
-        score
-        longName
-        listing {
-            currencyCode
-        }
+        ...SearchInfo
     }
 }

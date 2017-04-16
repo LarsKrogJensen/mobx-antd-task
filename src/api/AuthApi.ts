@@ -1,10 +1,11 @@
 import Axios, {AxiosRequestConfig} from "axios"
+import {API_URL} from "./apiConf"
 
 export default class AuthApi {
     public accessToken: string;
 
     private axios = Axios.create({
-        baseURL: "https://larskj-gql.herokuapp.com",
+        baseURL: API_URL,
         timeout: 50000,
     })
 
@@ -17,8 +18,8 @@ export default class AuthApi {
     public authenticate(): Promise<string> {
         const axios = this.axios
         const body = JSON.stringify({
-            client_id: "xxxx",
-            client_secret: "xxxxx"
+            client_id: "six",
+            client_secret: "sixsixsix"
         })
         const config: AxiosRequestConfig = {
             headers: {'content-type': 'application/json'}
