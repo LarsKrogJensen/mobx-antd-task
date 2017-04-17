@@ -13,17 +13,22 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     context: sourcePath,
     entry: {
-        main: './index.ts',
-        vendor: [
-            'react',
-            'react-dom',
-            'react-router',
-            'mobx',
-            'mobx-react',
-            'mobx-react-router',
-            'antd'
-        ]
+        main: [
+            'react-hot-loader/patch',
+            // 'webpack-dev-server/client?http://localhost:3000',
+            './index.ts'
+        ],
+        // vendor: [
+        //     'react',
+        //     'react-dom',
+        //     'react-router',
+        //     'mobx',
+        //     'mobx-react',
+        //     'mobx-react-router',
+        //     'antd'
+        // ]
     },
+
     output: {
         path: outPath,
         filename: 'bundle.js',
@@ -31,7 +36,7 @@ module.exports = {
     },
     target: 'web',
     resolve: {
-        extensions: ['.js', '.ts', '.tsx'],
+        extensions: ['.ts', '.tsx', '.js'],
         // Fix webpack's default behavior to not load packages with jsnext:main module
         // (jsnext:main directs not usually distributable es6 format, but es6 sources)
         mainFields: ['module', 'browser', 'main']
@@ -131,6 +136,9 @@ module.exports = {
     devServer: {
         contentBase: sourcePath,
         hot: true,
+        inline: true,
+        port: 3000,
+        historyApiFallback: true,
         stats: {
             warnings: false
         }

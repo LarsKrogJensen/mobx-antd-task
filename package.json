@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server -d --history-api-fallback --colors --progress --port 3000",
+    "start": "webpack-dev-server --config=./webpack.config.js",
+    "start2": "webpack-dev-server -d --history-api-fallback --colors --progress --port 3000",
     "build": "webpack -p --progress --colors",
     "serve": "pushstate-server dist 9000",
     "gql-gen": "gql-gen --url https://larskj-gql.herokuapp.com/mockql --template typescript-single --out ./src/api/atypings.ts"
@@ -20,6 +21,7 @@
     "@types/react-dom": "^0.14.23",
     "@types/react-router": "^3.0.4",
     "@types/webpack": "^2.2.6",
+    "@types/webpack-env": "^1.13.0",
     "awesome-typescript-loader": "^3.0.7",
     "css-loader": "^0.28.0",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",

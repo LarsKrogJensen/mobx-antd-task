@@ -61,6 +61,10 @@
   dependencies:
     "@types/source-map" "*"
 
+"@types/webpack-env@^1.13.0":
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.13.0.tgz#3044381647e11ee973c5af2e925323930f691d80"
+
 "@types/webpack@^2.2.6":
   version "2.2.14"
   resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-2.2.14.tgz#3970c56eac47013efc4e4b7f383fd59f60f50675"
