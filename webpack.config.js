@@ -16,16 +16,17 @@ module.exports = {
         main: [
             'react-hot-loader/patch',
             './index.ts'
+        ],
+        vendor: [
+            'react-hot-loader/patch',
+            'react',
+            'react-dom',
+            'react-router',
+            'mobx',
+            'mobx-react',
+            'mobx-react-router',
+            'antd'
         ]
-        // vendor: [
-        //     'react',
-        //     'react-dom',
-        //     'react-router',
-        //     'mobx',
-        //     'mobx-react',
-        //     'mobx-react-router',
-        //     'antd'
-        // ]
     },
 
     output: {
