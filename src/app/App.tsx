@@ -4,7 +4,6 @@ import * as React from 'react'
 import {hashHistory} from "react-router"
 
 const logo = require("../assets/logo.svg")
-// import AppHeader from "./AppHeader";
 
 const {Header, Content, Footer} = Layout
 

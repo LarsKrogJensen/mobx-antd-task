@@ -18,7 +18,6 @@ import SearchStore from "../search/SearchStore"
 import AuthApi from "../api/AuthApi"
 import {AppContainer} from 'react-hot-loader'
 
-
 // enable MobX strict mode
 useStrict(true)
 
@@ -52,6 +51,7 @@ function renderApp() {
         document.getElementById('root'),
     )
 }
+// const module = require('webpack-env')
 
 if (module.hot) {
     console.log("hot reloading")

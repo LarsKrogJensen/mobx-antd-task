@@ -20,6 +20,7 @@ export default class DataApi {
         }])
         this.client = new ApolloClient({
             networkInterface,
+            connectToDevTools: true
         })
     }
 

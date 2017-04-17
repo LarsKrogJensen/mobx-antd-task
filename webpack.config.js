@@ -15,9 +15,8 @@ module.exports = {
     entry: {
         main: [
             'react-hot-loader/patch',
-            // 'webpack-dev-server/client?http://localhost:3000',
             './index.ts'
-        ],
+        ]
         // vendor: [
         //     'react',
         //     'react-dom',
@@ -34,6 +33,7 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '/'
     },
+    devtool: '#source-map',
     target: 'web',
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
@@ -112,7 +112,7 @@ module.exports = {
                     require('postcss-url')(),
                     require('postcss-cssnext')(),
                     require('postcss-reporter')(),
-                    require('postcss-browser-reporter')({disabled: isProduction}),
+                    require('postcss-browser-reporter')({disabled: isProduction})
                 ]
             }
         }),
