@@ -6,8 +6,9 @@ import SearchList from "./SearchList"
 import SearchStore from "./SearchStore"
 import SearchBar from "./SearchBar"
 import "./search.less"
+import {RouteComponentProps} from "react-router"
 
-interface ISearchPageProps {
+interface ISearchPageProps extends RouteComponentProps<void> {
     // search store injected
 }
 

@@ -9,8 +9,9 @@ import TaskList from "./TaskList";
 import TaskPageModel from "./TaskPageModel";
 import {TaskStore} from "./TaskStore";
 import TaskToolbar from "./TaskToolbar";
+import {RouteComponentProps, RouteProps} from "react-router"
 
-interface ITaskPageProps {
+interface ITaskPageProps extends RouteComponentProps<void> {
     // injected
     // store: TaskStore
     // viewModel: TaskPageModel

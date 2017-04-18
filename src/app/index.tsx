@@ -2,7 +2,10 @@ import {useStrict} from 'mobx'
 import {Provider} from 'mobx-react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import {hashHistory, IndexRedirect, Route, Router} from 'react-router'
+import {
+    BrowserRouter as Router,
+    Route
+} from 'react-router-dom'
 import DataApi from "../api/DataApi"
 import {PAGE_TASK} from "../constants/pageModels"
 import {STORE_NEWS, STORE_SEARCH, STORE_TASK} from '../constants/stores'
@@ -38,13 +41,8 @@ function renderApp() {
     ReactDOM.render(
         <AppContainer>
             <Provider {...rootStores} {...pageModels}>
-                <Router history={hashHistory}>
-                    <Route path='/' component={App}>
-                        <IndexRedirect to="/task"/>
-                        <Route path="/task" component={TaskPage}/>
-                        <Route path="/news" component={NewsView}/>
-                        <Route path="/next" component={SearchPage}/>
-                    </Route>
+                <Router>
+                    <App/>
                 </Router>
             </Provider >
         </AppContainer>,

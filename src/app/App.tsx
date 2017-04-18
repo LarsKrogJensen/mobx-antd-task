@@ -1,13 +1,26 @@
 import {Layout, Menu} from "antd"
 import {SelectParam} from "antd/lib/menu"
 import * as React from 'react'
-import {hashHistory} from "react-router"
+// import * as PropTypes from 'pr'
+import SearchPage from "../search/SearchPage"
+import {
+    Link,
+    Route,
+    // RouterChildContext,
+    // RouteComponentProps
+} from "react-router-dom"
+
+import NewsView from "../graphql/NewsView"
+import TaskPage from "../task/TaskPage"
 
 const logo = require("../assets/logo.svg")
 
 const {Header, Content, Footer} = Layout
 
 export class App extends React.Component<any, any> {
+    public static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    }
 
     public render() {
         return (
@@ -21,14 +34,17 @@ export class App extends React.Component<any, any> {
                             mode="horizontal"
                             defaultSelectedKeys={['2']}
                             style={{lineHeight: '64px'}}>
-                            <Menu.Item key="task">Todo</Menu.Item>
-                            <Menu.Item key="news">Console</Menu.Item>
-                            <Menu.Item key="next">Search</Menu.Item>
+                            <Menu.Item key="task"><Link to="/task">Todo</Link></Menu.Item>
+                            <Menu.Item key="console"><Link to="/console">Console</Link></Menu.Item>
+                            <Menu.Item key="search"><Link to="/search">Search</Link></Menu.Item>
                         </Menu>
                     </Header>
                     <Layout>
                         <Content className="body">
-                            {this.props.children}
+                            <Route exact path="/" component={TaskPage}/>
+                            <Route path="/task" component={TaskPage}/>
+                            <Route path="/console" component={NewsView}/>
+                            <Route path="/search" component={SearchPage}/>
                         </Content>
                     </Layout>
                 </Layout>
@@ -45,6 +61,13 @@ export class App extends React.Component<any, any> {
     };
 
     private onMenuSelected(e: SelectParam) {
-        hashHistory.push(e.key)
+        const {
+            history,
+            route: {
+                location,
+                match
+            }
+        } = this.context.router
+        history.push(e.key)
     }
 }

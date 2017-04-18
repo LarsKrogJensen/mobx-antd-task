@@ -18,17 +18,17 @@
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.9.0.tgz#fccf859f0d2817687f210737dc3be48a18b1d754"
 
-"@types/history@^3":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@types/history/-/history-3.2.1.tgz#0039ab0e0be2a0cc22bac171d27a44588103d123"
+"@types/history@*":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@types/history/-/history-4.5.0.tgz#2f5c3aad4fbd00f89e99b83083e354bc5308e307"
 
 "@types/isomorphic-fetch@0.0.33":
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.33.tgz#3ea1b86f8b73e6a7430d01d4dbd5b1f63fd72718"
 
-"@types/node@*", "@types/node@^7.0.5":
-  version "7.0.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.12.tgz#ae5f67a19c15f752148004db07cbbb372e69efc9"
+"@types/node@*", "@types/node@^7.0.13":
+  version "7.0.13"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.13.tgz#1b0a53fe9ef9c3a5d061b126cc9b915bca43a3f5"
 
 "@types/react-dom@^0.14.20", "@types/react-dom@^0.14.23":
   version "0.14.23"
@@ -36,14 +36,22 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-router@^3.0.4":
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-3.0.10.tgz#81c4b1b000a53e69056cd559acdd1c5b57dbb649"
+"@types/react-router-dom@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-4.0.4.tgz#49f4a7037958f743e764b807fcbc8062fe46e493"
   dependencies:
-    "@types/history" "^3"
+    "@types/history" "*"
+    "@types/react" "*"
+    "@types/react-router" "*"
+
+"@types/react-router@*", "@types/react-router@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.4.tgz#288455d9e20fb475dc39700b1dbf20b7fea1a2ac"
+  dependencies:
+    "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^15.0.0", "@types/react@^15.0.12":
+"@types/react@*", "@types/react@15.0.21", "@types/react@^15.0.0":
   version "15.0.21"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.21.tgz#29d849427237c1463abfb7b370755ee3e5b5b375"
 
@@ -65,9 +73,9 @@
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.13.0.tgz#3044381647e11ee973c5af2e925323930f691d80"
 
-"@types/webpack@^2.2.6":
-  version "2.2.14"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-2.2.14.tgz#3970c56eac47013efc4e4b7f383fd59f60f50675"
+"@types/webpack@^2.2.15":
+  version "2.2.15"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-2.2.15.tgz#4ad7e9b7a51cae736a1dc783f203610c884789ff"
   dependencies:
     "@types/node" "*"
     "@types/tapable" "*"
@@ -715,9 +723,9 @@ codemirror-graphql@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/codemirror-graphql/-/codemirror-graphql-0.6.3.tgz#01f8841dab54c69e9f182caed39bd376c5ba3cb4"
 
-codemirror@5.23.0:
-  version "5.23.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.23.0.tgz#ac9b6b2e163a79e915b44cf0f43cd115cf6982dc"
+codemirror@5.25.0:
+  version "5.25.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.25.0.tgz#78e06939c7bb41f65707b8aa9c5328111948b756"
 
 color-convert@^0.5.3:
   version "0.5.3"
@@ -1651,11 +1659,11 @@ graceful-fs@^4.1.2:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-graphiql@^0.9.3:
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-0.9.3.tgz#939a73c73bbd7706b2693b5ff1f2c7fd29045124"
+graphiql@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/graphiql/-/graphiql-0.10.0.tgz#7d82b1f79b7093a087607818a9dbd5073ef2c19e"
   dependencies:
-    codemirror "5.23.0"
+    codemirror "5.25.0"
     codemirror-graphql "^0.6.3"
     marked "0.3.6"
 
@@ -1761,13 +1769,14 @@ he@1.1.x:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
-history@^3.0.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/history/-/history-3.3.0.tgz#fcedcce8f12975371545d735461033579a6dae9c"
+history@^4.5.1, history@^4.6.0:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/history/-/history-4.6.1.tgz#911cf8eb65728555a94f2b12780a0c531a14d2fd"
   dependencies:
     invariant "^2.2.1"
     loose-envify "^1.2.0"
-    query-string "^4.2.2"
+    resolve-pathname "^2.0.0"
+    value-equal "^0.2.0"
     warning "^3.0.0"
 
 hmac-drbg@^1.0.0:
@@ -1965,7 +1974,7 @@ interpret@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.2.tgz#f4f623f0bb7122f15f5717c8e254b8161b5c5b2d"
 
-invariant@^2.2.0, invariant@^2.2.1:
+invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:
@@ -2370,7 +2379,7 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
@@ -2488,9 +2497,9 @@ mobx-react-devtools@^4.2.11:
   version "4.2.11"
   resolved "https://registry.yarnpkg.com/mobx-react-devtools/-/mobx-react-devtools-4.2.11.tgz#18d89a32b7d28b48228d12ccde73cf733aacc395"
 
-mobx-react-router@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/mobx-react-router/-/mobx-react-router-3.1.2.tgz#83328b108393017148d86fea17f611de2d2aacdc"
+mobx-react-router@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/mobx-react-router/-/mobx-react-router-4.0.1.tgz#72f67b5c637d187595415500e8afa5cddb2231ab"
 
 mobx-react@^4.1.8:
   version "4.1.8"
@@ -2813,6 +2822,12 @@ path-parse@^1.0.5:
 path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
+
+path-to-regexp@^1.5.3:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
+  dependencies:
+    isarray "0.0.1"
 
 path-type@^1.0.0:
   version "1.1.0"
@@ -3470,7 +3485,7 @@ qs@6.4.0, qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
-query-string@^4.1.0, query-string@^4.2.2:
+query-string@^4.1.0:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.3.2.tgz#ec0fd765f58a50031a3968c2431386f8947a5cdd"
   dependencies:
@@ -3852,14 +3867,25 @@ react-responsive-mixin@^0.4.0:
     enquire.js "^2.1.1"
     json2mq "^0.2.0"
 
-react-router@^3.0.2:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-3.0.3.tgz#e95304b2e418482e5ecff2699d2b8aae52d5f884"
+react-router-dom@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.1.1.tgz#3021ade1f2c160af97cf94e25594c5f294583025"
   dependencies:
-    history "^3.0.0"
+    history "^4.5.1"
+    loose-envify "^1.3.1"
+    prop-types "^15.5.4"
+    react-router "^4.1.1"
+
+react-router@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.1.1.tgz#d448f3b7c1b429a6fbb03395099949c606b1fe95"
+  dependencies:
+    history "^4.6.0"
     hoist-non-react-statics "^1.2.0"
-    invariant "^2.2.1"
-    loose-envify "^1.2.0"
+    invariant "^2.2.2"
+    loose-envify "^1.3.1"
+    path-to-regexp "^1.5.3"
+    prop-types "^15.5.4"
     warning "^3.0.0"
 
 react-slick@~0.14.2:
@@ -4073,6 +4099,10 @@ require-main-filename@^1.0.1:
 requires-port@1.0.x, requires-port@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+
+resolve-pathname@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/resolve-pathname/-/resolve-pathname-2.0.2.tgz#e55c016eb2e9df1de98e85002282bfb38c630436"
 
 resolve@^1.1.7, resolve@^1.3.2:
   version "1.3.2"
@@ -4489,9 +4519,9 @@ tslint-loader@^3.5.2:
     rimraf "^2.4.4"
     semver "^5.3.0"
 
-tslint-react@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/tslint-react/-/tslint-react-2.5.0.tgz#94cd6143f6ae825c47f242c5146fc89caeadeae2"
+tslint-react@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/tslint-react/-/tslint-react-2.6.0.tgz#47a21fada1fd17589d4043bb088247d91a18bb83"
 
 tslint@^5.1.0:
   version "5.1.0"
@@ -4660,6 +4690,10 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
+
+value-equal@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/value-equal/-/value-equal-0.2.0.tgz#4f41c60a3fc011139a2ec3d3340a8998ae8b69c0"
 
 vary@~1.1.0:
   version "1.1.1"

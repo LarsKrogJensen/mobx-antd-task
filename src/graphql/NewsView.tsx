@@ -3,11 +3,12 @@ import {Icon} from "antd"
 import {CSSProperties} from "react"
 import {STORE_NEWS} from "../constants/stores"
 import {inject} from "mobx-react"
-import "./graphiql.css"
+import "./graphiql-org.css"
 import NewsStore from "./NewsStore"
+import {RouteComponentProps} from "react-router"
 const GraphiQL = require("graphiql")
 
-export interface INewsProps {
+export interface INewsProps extends RouteComponentProps<void> {
 
 }
 
