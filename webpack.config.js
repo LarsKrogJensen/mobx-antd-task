@@ -43,7 +43,7 @@ module.exports = {
         mainFields: ['module', 'browser', 'main']
     },
     module: {
-        loaders: [
+        rules: [
             // .ts, .tsx
             {
                 test: /\.tsx?$/,
@@ -66,27 +66,28 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'graphql-tag/loader'
             },
-            // css
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            query: {
-                                modules: true,
-                                sourceMap: !isProduction,
-                                importLoaders: 1,
-                                localIdentName: '[local]__[hash:base64:5]'
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader'
-                        }
-                    ]
-                })
-            },
+            // // css
+            // {
+            //     test: /\.css$/,
+            //     use: ExtractTextPlugin.extract({
+            //         fallback: 'style-loader',
+            //         use: [
+            //             {
+            //                 loader: 'css-loader',
+            //                 query: {
+            //                     // modules: true,
+            //                     sourceMap: !isProduction,
+            //                     importLoaders: 1,
+            //                     localIdentName: '[local]__[hash:base64:5]'
+            //                 }
+            //             },
+            //             {
+            //                 loader: 'postcss-loader'
+            //             }
+            //         ]
+            //     })
+            // },
+            // less
             {
                 test: /\.less$/,
                 use: [{
@@ -96,6 +97,18 @@ module.exports = {
                 }, {
                     loader: "less-loader" // compiles Less to CSS
                 }]
+            },
+            // css
+            {
+                test: /\.css$/,
+                use: ["style-loader",
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    "postcss-loader"]
             },
             // static assets
             {test: /\.html$/, use: 'html-loader'},
@@ -114,7 +127,11 @@ module.exports = {
                     require('postcss-cssnext')(),
                     require('postcss-reporter')(),
                     require('postcss-browser-reporter')({disabled: isProduction})
-                ]
+                ],
+                tslint: {
+                    emitErrors: true,
+                    failOnHint: true
+                }
             }
         }),
         new webpack.optimize.CommonsChunkPlugin({

@@ -2,6 +2,8 @@ import ApolloClient, {ApolloQueryResult, createNetworkInterface, WatchQueryOptio
 import {QueryType, SearchItem} from "./typings"
 import AuthApi from "./AuthApi"
 import {API_URL} from "./apiConf"
+import {DocumentNode} from "graphql"
+import gql from "graphql-tag"
 const searchQuery = require("./search.graphql")
 
 export default class DataApi {
@@ -34,5 +36,17 @@ export default class DataApi {
             .then((response: ApolloQueryResult<QueryType>) => response.data.listingSearch)
             .catch(error => console.error(error))
 
+    }
+
+    public fetcher(query: string): Promise<any> {
+        const options: WatchQueryOptions = {
+            query: gql`{
+                ${query}
+            }`
+        }
+
+        return this.client.query(options)
+            .then((response: ApolloQueryResult<QueryType>) => response.data)
+            .catch(error => console.error(error))
     }
 }

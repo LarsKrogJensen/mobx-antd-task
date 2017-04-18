@@ -24,7 +24,7 @@ export default class TaskPage extends React.Component<ITaskPageProps, {}> {
         const store: TaskStore = this.props[STORE_TASK];
         const pageModel: TaskPageModel = this.props[PAGE_TASK];
 
-        return <div>
+        return <div className="task-content">
             {store.errorMessage &&
                 <Alert className="task-view-alert"
                        message="Error"

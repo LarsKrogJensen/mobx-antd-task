@@ -6,8 +6,8 @@ import {hashHistory, IndexRedirect, Route, Router} from 'react-router'
 import DataApi from "../api/DataApi"
 import {PAGE_TASK} from "../constants/pageModels"
 import {STORE_NEWS, STORE_SEARCH, STORE_TASK} from '../constants/stores'
-import NewsStore from "../hnews/NewsStore"
-import NewsView from "../hnews/NewsView"
+import NewsStore from "../graphql/NewsStore"
+import NewsView from "../graphql/NewsView"
 import SearchPage from "../search/SearchPage"
 import TaskPage from "../task/TaskPage"
 import TaskPageModel from "../task/TaskPageModel"
@@ -26,7 +26,7 @@ const dataApi: DataApi = new DataApi(authApi)
 
 const rootStores = {
     [STORE_TASK]: new TaskStore(),
-    [STORE_NEWS]: new NewsStore(),
+    [STORE_NEWS]: new NewsStore(dataApi),
     [STORE_SEARCH]: new SearchStore(dataApi)
 }
 
@@ -54,7 +54,6 @@ function renderApp() {
 // const module = require('webpack-env')
 
 if (module.hot) {
-    console.log("hot reloading")
     module.hot.accept()
     renderApp()
 } else {
