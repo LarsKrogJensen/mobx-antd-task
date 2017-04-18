@@ -18,7 +18,7 @@ export default class SearchPage extends React.Component<ISearchPageProps, {}> {
         const store: SearchStore = this.props[STORE_SEARCH]
 
         return (
-            <div>
+            <div className="search-content">
                 <SearchBar store={store}/>
                 <SearchList store={store}/>
             </div>

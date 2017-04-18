@@ -22,8 +22,8 @@ export class App extends React.Component<any, any> {
                             defaultSelectedKeys={['2']}
                             style={{lineHeight: '64px'}}>
                             <Menu.Item key="task">Todo</Menu.Item>
-                            <Menu.Item key="news">Nacker News</Menu.Item>
-                            <Menu.Item key="next">SearchXXX</Menu.Item>
+                            <Menu.Item key="news">Console</Menu.Item>
+                            <Menu.Item key="next">Search</Menu.Item>
                         </Menu>
                     </Header>
                     <Layout>
