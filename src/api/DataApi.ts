@@ -2,14 +2,15 @@ import ApolloClient, {ApolloQueryResult, createNetworkInterface, WatchQueryOptio
 import {QueryType, SearchItem} from "./typings"
 import AuthApi from "./AuthApi"
 import {API_URL} from "./apiConf"
-import {DocumentNode} from "graphql"
 import gql from "graphql-tag"
 const searchQuery = require("./search.graphql")
 
 export default class DataApi {
     private readonly client: ApolloClient
+    private readonly authApi: AuthApi;
 
     constructor(authApi: AuthApi) {
+        this.authApi = authApi
         const networkInterface = createNetworkInterface({uri: API_URL + "/graphql"})
         networkInterface.use([{
             applyMiddleware(req, next) {
@@ -38,15 +39,12 @@ export default class DataApi {
 
     }
 
-    public fetcher(query: string): Promise<any> {
-        const options: WatchQueryOptions = {
-            query: gql`{
-                ${query}
-            }`
-        }
-
-        return this.client.query(options)
-            .then((response: ApolloQueryResult<QueryType>) => response.data)
-            .catch(error => console.error(error))
+    public graphQLFetcher(graphQLParams: string) {
+      return fetch(API_URL + '/graphql', {
+          body: JSON.stringify(graphQLParams),
+          headers: { 'Content-Type': 'application/json',
+          'authorization': 'Bearer ' + this.authApi.accessToken},
+          method: 'post',
+      }).then(response => response.json());
     }
 }
