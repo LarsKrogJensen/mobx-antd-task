@@ -9,22 +9,19 @@ interface ITask {
 
 export default class TaskApi {
     private axios = Axios.create({
-        baseURL: "http://localhost:8080",
-        timeout: 5000,
+        baseURL: "https://larskj-task.herokuapp.com",
+        timeout: 50000,
     });
 
 
     public loadTasks(): Promise<TaskModel[]> {
         const axios = this.axios;
-        return new Promise<TaskModel[]>((resolve, reject) => {
-            axios.get("/tasks")
-                .then(response => {
-                    const data: ITask[] = response.data
-                    resolve(data.map(todo => new TaskModel(todo.id, todo.title, todo.completed)))
-                })
-                .catch(reason => reject(reason))
-        })
 
+        return axios.get("/tasks")
+                       .then(response => {
+                           const data: ITask[] = response.data
+                           return data.map(todo => new TaskModel(todo.id, todo.title, todo.completed))
+                       })
     }
 
     public newTask(): Promise<TaskModel> {

@@ -17,15 +17,12 @@ class AppHeader extends React.Component<IAppHeaderProps, {}> {
         console.log("Path: " + location.pathname);
         return (
             <Header className="header">
-                <img className="logo" src={logo}/>
+                <Link to="/"><img className="logo" src={logo}/></Link>
                 <Menu
                     theme="dark"
                     mode="horizontal"
                     selectedKeys={[location.pathname]}
                     style={{lineHeight: '64px'}}>
-                    {/*<MenuLink to="/task" label="Todo"/>*/}
-                    {/*<MenuLink to="/console" label="Console"/>*/}
-                    {/*<MenuLink to="/search" label="Search"/>*/}
                     <Menu.Item key="/task"><Link to="/task">Todo</Link></Menu.Item>
                     <Menu.Item key="/console"><Link to="/console">Console</Link></Menu.Item>
                     <Menu.Item key="/search"><Link to="/search">Search</Link></Menu.Item>
@@ -34,18 +31,6 @@ class AppHeader extends React.Component<IAppHeaderProps, {}> {
         )
     }
 }
-
-interface IMenuLinkProps extends LinkProps {
-    activeOnlyWhenExact?: boolean;
-}
-
-const MenuLink: React.SFC<IMenuLinkProps> = ({ label, to, activeOnlyWhenExact }) => (
-  <Route path={to as string} exact={activeOnlyWhenExact} children={({ match }) => (
-    <Menu.Item>
-      {match ? '> ' : ''}<Link to={to}>{label}</Link>
-    </Menu.Item>
-  )}/>
-)
 
 const AppHeaderWithRouter = withRouter(AppHeader)
 
