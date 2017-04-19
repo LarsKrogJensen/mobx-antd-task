@@ -20,6 +20,7 @@ export default class TaskFooter extends React.Component<ITaskFooterProps, {}> {
             <DataGridFooter>
                 <div className="task-footer">
                     <Badge className="task-footer-item"
+                           showZero={true}
                            count={this.props.store.completedCount}
                            style={{backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset'}}/>
                     <div className="task-footer-item">Completed</div>

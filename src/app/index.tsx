@@ -2,17 +2,11 @@ import {useStrict} from 'mobx'
 import {Provider} from 'mobx-react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import {
-    BrowserRouter as Router,
-    Route
-} from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
 import DataApi from "../api/DataApi"
 import {PAGE_TASK} from "../constants/pageModels"
 import {STORE_NEWS, STORE_SEARCH, STORE_TASK} from '../constants/stores'
 import NewsStore from "../graphql/NewsStore"
-import NewsView from "../graphql/NewsView"
-import SearchPage from "../search/SearchPage"
-import TaskPage from "../task/TaskPage"
 import TaskPageModel from "../task/TaskPageModel"
 import {TaskStore} from "../task/TaskStore"
 import {App} from './App'
@@ -36,7 +30,7 @@ const rootStores = {
 const pageModels = {
     [PAGE_TASK]: new TaskPageModel(),
 }
-// render react DOM
+
 function renderApp() {
     ReactDOM.render(
         <AppContainer>

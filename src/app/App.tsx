@@ -1,47 +1,35 @@
 import {Layout, Menu} from "antd"
-import {SelectParam} from "antd/lib/menu"
 import * as React from 'react'
-// import * as PropTypes from 'pr'
 import SearchPage from "../search/SearchPage"
 import {
     Link,
     Route,
-    // RouterChildContext,
-    // RouteComponentProps
 } from "react-router-dom"
 
 import NewsView from "../graphql/NewsView"
 import TaskPage from "../task/TaskPage"
+import {Redirect} from "react-router"
+import AppHeader from "./AppHeader"
 
 const logo = require("../assets/logo.svg")
+const {Content} = Layout
 
-const {Header, Content, Footer} = Layout
+interface IAppProps {
+    //
+}
 
-export class App extends React.Component<any, any> {
-    public static contextTypes = {
-        router: React.PropTypes.object.isRequired
-    }
-
+export class App extends React.Component<IAppProps, any> {
+    
     public render() {
         return (
             <div className="app">
                 <Layout className="layout">
-                    <Header className="header">
-                        <img className="logo" src={logo}/>
-                        <Menu
-                            onSelect={this.onMenuSelected}
-                            theme="dark"
-                            mode="horizontal"
-                            defaultSelectedKeys={['2']}
-                            style={{lineHeight: '64px'}}>
-                            <Menu.Item key="task"><Link to="/task">Todo</Link></Menu.Item>
-                            <Menu.Item key="console"><Link to="/console">Console</Link></Menu.Item>
-                            <Menu.Item key="search"><Link to="/search">Search</Link></Menu.Item>
-                        </Menu>
-                    </Header>
+                    <AppHeader/>
                     <Layout>
                         <Content className="body">
-                            <Route exact path="/" component={TaskPage}/>
+                            <Route exact path="/" render={() => (
+                                <Redirect to="/task"/>
+                            )}/>
                             <Route path="/task" component={TaskPage}/>
                             <Route path="/console" component={NewsView}/>
                             <Route path="/search" component={SearchPage}/>
@@ -59,15 +47,4 @@ export class App extends React.Component<any, any> {
             return (<DevTools />)
         }
     };
-
-    private onMenuSelected(e: SelectParam) {
-        const {
-            history,
-            route: {
-                location,
-                match
-            }
-        } = this.context.router
-        history.push(e.key)
-    }
 }
