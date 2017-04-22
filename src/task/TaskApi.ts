@@ -9,7 +9,8 @@ interface ITask {
 
 export default class TaskApi {
     private axios = Axios.create({
-        baseURL: "https://larskj-task.herokuapp.com",
+        // baseURL: "http://localhost:8080/api",
+        baseURL: "https://larskj-task2.herokuapp.com/api",
         timeout: 50000,
     });
 
