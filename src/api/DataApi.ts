@@ -8,7 +8,7 @@ const searchQuery = require("./search.graphql")
 export default class DataApi {
     private readonly client: ApolloClient
     private readonly authApi: AuthApi
-    private readonly webSocket: WebSocket
+    private webSocket: WebSocket
     private readonly publisher: Subject<any>
 
     constructor(authApi: AuthApi) {
@@ -28,20 +28,7 @@ export default class DataApi {
             networkInterface,
             connectToDevTools: true
         })
-
-        this.webSocket = new WebSocket("ws://localhost:8080/mockqlws")
-        this.webSocket.onopen = (e: Event) => {
-            console.log("ws open")
-        }
-        this.webSocket.onclose = (e: Event) => {
-            console.log("ws close")
-        }
-        this.webSocket.onerror = (e: Event) => {
-            console.log("ws error")
-        }
-        this.webSocket.onmessage = (e: MessageEvent) => {
-            this.publisher.next(JSON.parse(e.data))
-        }
+        this.connect()
 
     }
 
@@ -78,5 +65,22 @@ export default class DataApi {
         //
         this.webSocket.send(JSON.stringify(graphQLParams))
         return this.publisher
+    }
+
+    private connect() {
+        this.webSocket = new WebSocket("ws://localhost:8080/mockqlws")
+        this.webSocket.onopen = (e: Event) => {
+            console.log("ws open")
+        }
+        this.webSocket.onclose = (e: Event) => {
+            console.log("ws close")
+            setTimeout(() => this.connect(), 1000)
+        }
+        this.webSocket.onerror = (e: Event) => {
+            console.log("ws error")
+        }
+        this.webSocket.onmessage = (e: MessageEvent) => {
+            this.publisher.next(JSON.parse(e.data))
+        }
     }
 }
