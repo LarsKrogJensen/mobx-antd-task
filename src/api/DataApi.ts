@@ -2,12 +2,14 @@ import ApolloClient, {ApolloQueryResult, createNetworkInterface, WatchQueryOptio
 import {QueryType, SearchItem} from "./typings"
 import AuthApi from "./AuthApi"
 import {API_URL} from "./apiConf"
-import gql from "graphql-tag"
+import {Subject} from "rxjs/Subject"
 const searchQuery = require("./search.graphql")
 
 export default class DataApi {
     private readonly client: ApolloClient
-    private readonly authApi: AuthApi;
+    private readonly authApi: AuthApi
+    private readonly webSocket: WebSocket
+    private readonly publisher: Subject<any>
 
     constructor(authApi: AuthApi) {
         this.authApi = authApi
@@ -21,10 +23,26 @@ export default class DataApi {
                 next()
             }
         }])
+        this.publisher = new Subject()
         this.client = new ApolloClient({
             networkInterface,
             connectToDevTools: true
         })
+
+        this.webSocket = new WebSocket("ws://localhost:8080/mockqlws")
+        this.webSocket.onopen = (e: Event) => {
+            console.log("ws open")
+        }
+        this.webSocket.onclose = (e: Event) => {
+            console.log("ws close")
+        }
+        this.webSocket.onerror = (e: Event) => {
+            console.log("ws error")
+        }
+        this.webSocket.onmessage = (e: MessageEvent) => {
+            this.publisher.next(JSON.parse(e.data))
+        }
+
     }
 
     public search(query: string): Promise<SearchItem[]> {
@@ -39,12 +57,26 @@ export default class DataApi {
 
     }
 
-    public graphQLFetcher(graphQLParams: string) {
-      return fetch(API_URL + '/graphql', {
-          body: JSON.stringify(graphQLParams),
-          headers: { 'Content-Type': 'application/json',
-          'authorization': 'Bearer ' + this.authApi.accessToken},
-          method: 'post',
-      }).then(response => response.json());
+    public graphQLFetcher(graphQLParams: any) {
+        // const docNode = gql`${graphQLParams.query}`
+        // const options: WatchQueryOptions = {
+        //     query: docNode,
+        //     variables: graphQLParams.variables
+        // }
+        //
+        // return this.client.query(options)
+        //     .then((response: ApolloQueryResult<QueryType>) => response.data)
+
+        // return fetch(API_URL + '/graphql', {
+        //     body: JSON.stringify(graphQLParams),
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'authorization': 'Bearer ' + this.authApi.accessToken
+        //     },
+        //     method: 'post',
+        // }).then(response => response.json())
+        //
+        this.webSocket.send(JSON.stringify(graphQLParams))
+        return this.publisher
     }
 }
