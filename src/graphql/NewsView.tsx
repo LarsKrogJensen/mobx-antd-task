@@ -27,7 +27,7 @@ export default class NewsView extends React.Component<INewsProps, {}> {
 
         return (
             <div style={style}>
-                <GraphiQL fetcher={(query: string) => store.dataApi.graphQLFetcher(query)}>
+                <GraphiQL fetcher={(query: any) => store.dataApi.fetchData(query)}>
                     <GraphiQL.Logo>
                         <div id="logo">
                             <Icon type="laptop"/>

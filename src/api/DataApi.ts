@@ -1,15 +1,21 @@
 import ApolloClient, {ApolloQueryResult, createNetworkInterface, WatchQueryOptions} from 'apollo-client'
 import {QueryType, SearchItem} from "./typings"
 import AuthApi from "./AuthApi"
-import {API_URL} from "./apiConf"
+import {API_URL, WS_URL} from "./apiConf"
 import {Subject} from "rxjs/Subject"
+import {addGraphQLSubscriptions, SubscriptionClient} from "subscriptions-transport-ws"
+import {graphQLFetcher} from "graphiql-subscriptions-fetcher/dist/fetcher"
+import {autobind} from "core-decorators"
+import {Observable} from "rxjs/Rx"
 const searchQuery = require("./search.graphql")
 
 export default class DataApi {
+    private readonly subscriptionClient: SubscriptionClient
     private readonly client: ApolloClient
     private readonly authApi: AuthApi
     private webSocket: WebSocket
-    private readonly publisher: Subject<any>
+    private publisher: Subject<JSON>
+
 
     constructor(authApi: AuthApi) {
         this.authApi = authApi
@@ -23,13 +29,28 @@ export default class DataApi {
                 next()
             }
         }])
-        this.publisher = new Subject()
-        this.client = new ApolloClient({
-            networkInterface,
-            connectToDevTools: true
-        })
-        this.connect()
 
+        // this.subscriptionClient = new SubscriptionClient(WS_URL + "/mockqlws", {
+        //     connectionParams: {
+        //         // Pass any arguments you want for initialization
+        //     },
+        //     reconnect: true
+        // });
+        // Extend the network interface with the WebSocket
+        // const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
+        //     networkInterface,
+        //     this.subscriptionClient
+        // );
+
+        this.client = new ApolloClient({
+            connectToDevTools: true,
+            networkInterface
+            // networkInterface: networkInterfaceWithSubscriptions
+        })
+
+
+        // old style ws client
+        this.connect()
     }
 
     public search(query: string): Promise<SearchItem[]> {
@@ -44,7 +65,7 @@ export default class DataApi {
 
     }
 
-    public graphQLFetcher(graphQLParams: any) {
+    public fetchData(graphQLParams: any) {
         // const docNode = gql`${graphQLParams.query}`
         // const options: WatchQueryOptions = {
         //     query: docNode,
@@ -54,20 +75,38 @@ export default class DataApi {
         // return this.client.query(options)
         //     .then((response: ApolloQueryResult<QueryType>) => response.data)
 
-        // return fetch(API_URL + '/graphql', {
-        //     body: JSON.stringify(graphQLParams),
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'authorization': 'Bearer ' + this.authApi.accessToken
-        //     },
-        //     method: 'post',
-        // }).then(response => response.json())
+        // return graphQLFetcher(this.subscriptionClient, this.fallbackFetcher)(graphQLParams)
         //
-        this.webSocket.send(JSON.stringify(graphQLParams))
-        return this.publisher
+        // Observable.fromEvent(document, 'click')
+        // .filter(c => c.clientX > window.innerWidth / 2)
+        // .take(10)
+        // .subscribe(c =>{
+        //     console.log(c.clientX, c.clientY)
+        // })
+
+        // this.webSocket.
+        // this.webSocket.send(JSON.stringify(graphQLParams))
+        // return this.publisher
+        return this.fallbackFetcher(graphQLParams)
+    }
+
+    @autobind
+    private fallbackFetcher(graphQLParams: any) {
+        return fetch(API_URL + '/graphql', {
+            body: JSON.stringify(graphQLParams),
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + this.authApi.accessToken
+            },
+            method: 'post',
+        }).then(response => response.json())
     }
 
     private connect() {
+        if (!this.publisher) {
+            this.publisher = new Subject()
+        }
+
         this.webSocket = new WebSocket("ws://localhost:8080/mockqlws")
         this.webSocket.onopen = (e: Event) => {
             console.log("ws open")

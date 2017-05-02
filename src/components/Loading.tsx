@@ -7,7 +7,7 @@ export interface ILoadingProps {
 }
 
 
-export default function withLoading<P extends ILoadingProps>(Comp: React.ComponentClass<P>
+function withLoading<P extends ILoadingProps>(Comp: React.ComponentClass<P>
     | React.StatelessComponent<P>): React.ComponentClass<P> {
     return class WithLoading extends React.Component<P, {}> {
         public render() {
@@ -18,7 +18,10 @@ export default function withLoading<P extends ILoadingProps>(Comp: React.Compone
                     </Flexbox>
                 );
             }
-            return <Comp {...this.props} />
+            // return <div/>
+            return <Comp {...(this.props as any)} />
         }
     }
 }
+
+export default withLoading

@@ -14,6 +14,8 @@ import "./theme.less"
 import SearchStore from "../search/SearchStore"
 import AuthApi from "../api/AuthApi"
 import {AppContainer} from 'react-hot-loader'
+import * as Rx from "rxjs/Rx"
+
 
 // enable MobX strict mode
 useStrict(true)
@@ -50,4 +52,18 @@ if (module.hot) {
     renderApp()
 } else {
     renderApp()
+}
+
+play()
+
+
+function play() {
+    // const a = Rx.Observable.interval(200).map(i => 'A' + i);
+    // const b = Rx.Observable.interval(100).map(i => 'B' + i);
+    //
+    // const m = Rx.Observable.merge(a, b);
+    //
+    // m.subscribe(x => {
+    //     console.log(x);
+    // });
 }

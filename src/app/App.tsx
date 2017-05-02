@@ -1,4 +1,4 @@
-import {Layout, Menu} from "antd"
+import {Layout} from "antd"
 import * as React from 'react'
 import SearchPage from "../search/SearchPage"
 import {

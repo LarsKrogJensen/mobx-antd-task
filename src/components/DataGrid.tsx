@@ -1,5 +1,5 @@
 import * as React from "react"
-import {default as withLoading} from "./Loading"
+import withLoading from "./Loading"
 
 export interface IDataGridProps {
     footer?: JSX.Element
@@ -62,7 +62,7 @@ export const DataGridRow = (props) => {
     )
 }
 
-export const DataGridCell = (props) => {
+export const DataGridCell = props => {
     return (
         <td>
             <span className="ant-table-row-indent indent-level-0"
