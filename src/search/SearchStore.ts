@@ -1,6 +1,7 @@
 import {action, observable} from "mobx"
 import DataApi from "../api/DataApi"
 import {SearchItem} from "../api/typings"
+
 export default class SearchStore {
     @observable
     public searchQuery: string = ''

@@ -1,20 +1,19 @@
 import * as React from 'react'
-import {match, Route, RouteComponentProps, withRouter} from "react-router"
+import {RouteComponentProps, withRouter} from "react-router"
 import {Layout, Menu} from "antd"
-import {Link, LinkProps} from "react-router-dom"
-import {App} from "./App"
+import {Link} from "react-router-dom"
 
 const logo = require("../assets/logo.svg")
 const {Header} = Layout
 
 interface IAppHeaderProps extends RouteComponentProps<any> {
-
+    // empty
 }
 
 class AppHeader extends React.Component<IAppHeaderProps, {}> {
     public render() {
-        const { match, location, history } = this.props
-        console.log("Path: " + location.pathname);
+        const {match, location, history} = this.props
+        console.log("Path: " + location.pathname)
         return (
             <Header className="header">
                 <Link to="/"><img className="logo" src={logo}/></Link>
